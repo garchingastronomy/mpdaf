@@ -217,7 +217,7 @@ def write(filename, xpos, ypos, lbda, data, dq, stat, origin, weight=None,
 
 
 def plot_autocal_factors(filename, savefig=None, plot_rejected=False,
-                         sharex=True, sharey=True, figsize=4, cmap='Spectral',
+                         sharex=True, wave_n = None, sharey=True, figsize=4, cmap='Spectral',
                          plot_npts=False):
     """Plot the corrections computed by `PixTable.selfcalibrate`.
 
@@ -234,6 +234,8 @@ def plot_autocal_factors(filename, savefig=None, plot_rejected=False,
         AUTOCAL_FACTORS table.
     sharex, sharey : bool
         Controls sharing of properties among x/y axes.
+    wave_n : int
+        Number of the wavelength bin to show in red vertical line.
     figsize : float
         Size of an individual plot.
     cmap : str
@@ -266,6 +268,8 @@ def plot_autocal_factors(filename, savefig=None, plot_rejected=False,
                     not plot_npts and not np.isnan(ts['corr_orig']).all():
                 ax.scatter(ts['quad'], ts['corr_orig'], s=20,
                            color=palette[sl - 1])
+            if(wave_n is not None):
+                ax.axvline(x=wave_n,ls='--',color='r')
         ax.set_title('IFU %s' % ifu)
         ax.grid(True)
 
